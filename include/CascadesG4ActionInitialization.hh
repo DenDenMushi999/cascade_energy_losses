@@ -1,5 +1,5 @@
-#ifndef Ex2G4ActionInitialization_h
-#define Ex2G4ActionInitialization_h 1
+#ifndef CascadesG4ActionInitialization_h
+#define CascadesG4ActionInitialization_h 1
 
 #include "G4VUserActionInitialization.hh"
 
@@ -7,11 +7,11 @@
 /// Имя класса может быть другим, и он должен наследоваться от
 /// класса G4VUserActionInitialization
 
-class Ex2G4ActionInitialization : public G4VUserActionInitialization
+class CascadesG4ActionInitialization : public G4VUserActionInitialization
 {
 public :
-	Ex2G4ActionInitialization();
-	virtual ~Ex2G4ActionInitialization();
+	CascadesG4ActionInitialization();
+	virtual ~CascadesG4ActionInitialization();
 	virtual void Build() const;
 };
 #endif

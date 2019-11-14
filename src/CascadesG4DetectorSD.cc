@@ -5,12 +5,12 @@
 #include <G4Types.hh>
 #include "G4SystemOfUnits.hh"
 #include "G4ThreeVector.hh"
-#include "Ex2G4DetectorSD.hh"
+#include "CascadesG4DetectorSD.hh"
 
 using namespace std;
 // Конструктор чувствительной области, по умолчанию инициализируем нижнюю и верхнюю
 // границы гистограммы в 0 и 50 МэВ
-Ex2G4DetectorSD::Ex2G4DetectorSD(G4String name): 
+CascadesG4DetectorSD::CascadesG4DetectorSD(G4String name): 
 					G4VSensitiveDetector(name)
 {
 	// Обнуляем гистограммы
@@ -19,7 +19,7 @@ Ex2G4DetectorSD::Ex2G4DetectorSD(G4String name):
     vector<G4String>().swap(particles);
 }
 //Вызывается на каждом шаге моделирования частицы, когда она попадает в этот чувствительный объем
-G4bool Ex2G4DetectorSD::ProcessHits(G4Step* step, G4TouchableHistory* history)
+G4bool CascadesG4DetectorSD::ProcessHits(G4Step* step, G4TouchableHistory* history)
 {
 	// Получаем кинетическую энергии частицы с предыдущего шага, т.е. начальную
 	// кинетическую энегрию перед текущим шагом
@@ -43,7 +43,7 @@ G4bool Ex2G4DetectorSD::ProcessHits(G4Step* step, G4TouchableHistory* history)
     return true;
 }
 
-Ex2G4DetectorSD::~Ex2G4DetectorSD()
+CascadesG4DetectorSD::~CascadesG4DetectorSD()
 {
 	ofstream file("spectrum.dat");
 

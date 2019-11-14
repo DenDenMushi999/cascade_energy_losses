@@ -1,4 +1,4 @@
-#include "Ex2G4PrimaryGeneratorAction.hh"
+#include "CascadesG4PrimaryGeneratorAction.hh"
 // Подключаем необходимы заголовочные файлы
 #include "G4LogicalVolumeStore.hh"
 #include "G4LogicalVolume.hh"
@@ -12,7 +12,7 @@
 
 // Класс, в котором описывается положение, тип, энергия, направление вылета
 // и распределение начальных частиц
-Ex2G4PrimaryGeneratorAction::Ex2G4PrimaryGeneratorAction()
+CascadesG4PrimaryGeneratorAction::CascadesG4PrimaryGeneratorAction()
 : G4VUserPrimaryGeneratorAction(),
   fParticleGun(0),
   fEnvelopeBox(0)
@@ -37,19 +37,19 @@ Ex2G4PrimaryGeneratorAction::Ex2G4PrimaryGeneratorAction()
 }
 
 // Деструктор
-Ex2G4PrimaryGeneratorAction::~Ex2G4PrimaryGeneratorAction()
+CascadesG4PrimaryGeneratorAction::~CascadesG4PrimaryGeneratorAction()
 {
     // удаляем созданный в конструкторе экземпляр класса источника G4ParticleGun
     delete fParticleGun;
 }
 
-void Ex2G4PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
+void CascadesG4PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
     //Эта функция вызывается в начале каждого первичного события запуска частицы
     // Для избежания зависимости этого класса от класса DetectorConstruction,
     // мы получаем ссылку на объем детектора через класс G4LogicalVolumeStore
 
-    G4double envSizeX2Y = 0;
+    G4double envSizCascadesY = 0;
     G4double envSizeZ = 0;
     // Проверяем, не пустая ли ссылка на fEnvelopeBox
     if (!fEnvelopeBox)
@@ -61,7 +61,7 @@ void Ex2G4PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     }
     // Получаем размеры объема, стороны по x и y предполагается что одинаковы
     if ( fEnvelopeBox ) {
-      envSizeX2Y = fEnvelopeBox->GetXHalfLength()*2.;
+      envSizCascadesY = fEnvelopeBox->GetXHalfLength()*2.;
       envSizeZ = fEnvelopeBox->GetZHalfLength()*2.;
     }
     else  {//Если ссылка на fEnvelopeBox пустая, выдаем предупреждение

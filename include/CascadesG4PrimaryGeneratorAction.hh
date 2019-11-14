@@ -1,5 +1,5 @@
-#ifndef Ex2G4PrimaryGeneratorAction_h
-#define Ex2G4PrimaryGeneratorAction_h 1
+#ifndef CascadesG4PrimaryGeneratorAction_h
+#define CascadesG4PrimaryGeneratorAction_h 1
 
 #include "G4VUserPrimaryGeneratorAction.hh"
 #include "G4ParticleGun.hh"
@@ -10,11 +10,11 @@ class G4Event;
 class G4Box;
 
 /// Класс определения источника первичных частиц
-class Ex2G4PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
+class CascadesG4PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
   public:
-    Ex2G4PrimaryGeneratorAction();
-    virtual ~Ex2G4PrimaryGeneratorAction();
+    CascadesG4PrimaryGeneratorAction();
+    virtual ~CascadesG4PrimaryGeneratorAction();
 
     // Метод из базового класса, задает параметры источника начальных частиц
     virtual void GeneratePrimaries(G4Event*);
