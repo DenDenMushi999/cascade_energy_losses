@@ -2,9 +2,9 @@
 #include "G4UImanager.hh"
 
 // include mandatory header files
-#include "Ex2G4DetectorConstruction.hh"
+#include "CascadesG4DetectorConstruction.hh"
 #include "FTFP_BERT.hh"
-#include "Ex2G4ActionInitialization.hh"
+#include "CascadesG4ActionInitialization.hh"
 
 
 #ifdef G4UI_USE //Если используется интерфейс пользователя то включаем визуализацию
@@ -17,9 +17,9 @@ int main(int argc, char** argv)
 {
     G4RunManager* runManager = new G4RunManager;
 
-    runManager->SetUserInitialization(new Ex2G4DetectorConstruction());
+    runManager->SetUserInitialization(new CascadesG4DetectorConstruction());
     runManager->SetUserInitialization(new FTFP_BERT());
-    runManager->SetUserInitialization(new Ex2G4ActionInitialization());
+    runManager->SetUserInitialization(new CascadesG4ActionInitialization());
     runManager->Initialize();
 
     G4VisManager* visManager = new G4VisExecutive;
