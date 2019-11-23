@@ -69,4 +69,4 @@ add_custom_target(cascades DEPENDS cascades)
 # Установка исполняемого файла в 'bin' директорию по пути
 # установки CMAKE_INSTALL_PREFIX
 #
-install(TARGETS example2 DESTINATION bin)
+install(TARGETS cascades DESTINATION bin)
