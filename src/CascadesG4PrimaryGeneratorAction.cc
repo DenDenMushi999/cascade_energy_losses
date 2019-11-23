@@ -31,7 +31,7 @@ CascadesG4PrimaryGeneratorAction::CascadesG4PrimaryGeneratorAction()
     fParticleGun->SetParticleDefinition(particle);
     // Устанавливаем направление движение частицы по (x,y,z)
     // Здесь устанавливается направление вдоль оси Z
-    fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.));
+    fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,-1.0,0.));
     // Установка начальной энергии испускаемых частиц, 30 МэВ
     fParticleGun->SetParticleEnergy(30*MeV);
 }
@@ -49,8 +49,8 @@ void CascadesG4PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     // Для избежания зависимости этого класса от класса DetectorConstruction,
     // мы получаем ссылку на объем детектора через класс G4LogicalVolumeStore
 
-    G4double envSizCascadesY = 0;
-    G4double envSizeZ = 0;
+    G4double envSizCascadesXZ = 0;
+    G4double envSizeY = 0;
     // Проверяем, не пустая ли ссылка на fEnvelopeBox
     if (!fEnvelopeBox)
     {
@@ -61,8 +61,8 @@ void CascadesG4PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     }
     // Получаем размеры объема, стороны по x и y предполагается что одинаковы
     if ( fEnvelopeBox ) {
-      envSizCascadesY = fEnvelopeBox->GetXHalfLength()*2.;
-      envSizeZ = fEnvelopeBox->GetZHalfLength()*2.;
+      envSizCascadesXZ = fEnvelopeBox->GetXHalfLength()*2.;
+      envSizeY = fEnvelopeBox->GetYHalfLength()*2.;
     }
     else  {//Если ссылка на fEnvelopeBox пустая, выдаем предупреждение
       G4ExceptionDescription msg;
@@ -74,8 +74,8 @@ void CascadesG4PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     }
     // Объявляем переменные положения пушки частиц
     G4double x0 = 0;
-    G4double y0 = 0;
-    G4double z0 = -0.5 * 20*cm;
+    G4double y0 = 10*cm;
+    G4double z0 = 0;
     // Устанавливаем положение
     fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));
     // Генерируем первичное событие
