@@ -6,7 +6,7 @@
 # Запуск проекта, проверка необходимой версии Cmake
 cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 # Название проекта
-project(cascades)
+project(Cascade)
 
 # Поиск пакетов Geant4, включение всех доступных интерфейсов пользователя
 # (Qt, GAG, tcsh, csh) и драйверов визуализации по умолчанию.
@@ -64,9 +64,9 @@ endforeach()
 # Для внутеренего использования в Geant4, но не имеет влияния если проект
 # компилируется для отдельного использования
 #
-add_custom_target(cascade DEPENDS cascade)
+add_custom_target(Cascade DEPENDS cascades)
 
 # Установка исполняемого файла в 'bin' директорию по пути
 # установки CMAKE_INSTALL_PREFIX
 #
-install(TARGETS cascade DESTINATION bin)
+install(TARGETS cascades DESTINATION bin)
