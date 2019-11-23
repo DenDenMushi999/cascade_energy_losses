@@ -39,7 +39,7 @@ G4bool CascadesG4DetectorSD::ProcessHits(G4Step* step, G4TouchableHistory* histo
         particles.push_back(det_particle);
     }
 
-	step->GetTrack()->SetTrackStatus(fStopAndKill);
+	//step->GetTrack()->SetTrackStatus(fStopAndKill);
     return true;
 }
 
