@@ -31,7 +31,6 @@ CascadesG4PrimaryGeneratorAction::CascadesG4PrimaryGeneratorAction()
     fParticleGun->SetParticleDefinition(particle);
     // Устанавливаем направление движение частицы по (x,y,z)
     // Здесь устанавливается направление вдоль оси Z
-    fParticleGun->SetParticlePosition(G4ThreeVector(0.,10.0*cm,0.))
     fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,-1.0,0.));
     // Установка начальной энергии испускаемых частиц, 30 МэВ
     fParticleGun->SetParticleEnergy(30*MeV);
