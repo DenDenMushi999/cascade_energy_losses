@@ -64,9 +64,9 @@ endforeach()
 # Для внутеренего использования в Geant4, но не имеет влияния если проект
 # компилируется для отдельного использования
 #
-add_custom_target(cascades DEPENDS cascades)
+add_custom_target(cascade DEPENDS cascades)
 
 # Установка исполняемого файла в 'bin' директорию по пути
 # установки CMAKE_INSTALL_PREFIX
 #
-install(TARGETS cascades DESTINATION bin)
+install(TARGETS cascade DESTINATION bin)
