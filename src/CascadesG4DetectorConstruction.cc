@@ -68,7 +68,7 @@ G4VPhysicalVolume* CascadesG4DetectorConstruction::Construct()
                         "Detector");
 
     new G4PVPlacement(0,
-                    G4ThreeVector(0, -det_size_Y/2, 0),
+                    G4ThreeVector(0, -det_sizeY/2, 0),
                     logicDet,
                     "Detector",
                     logicWorld,
