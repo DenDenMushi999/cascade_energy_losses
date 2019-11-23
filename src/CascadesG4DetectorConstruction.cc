@@ -37,8 +37,8 @@ G4VPhysicalVolume* CascadesG4DetectorConstruction::Construct()
     G4Box* solidWorld = 
     new G4Box("World",
             0.5*world_sizeXZ,
-            0.5*world_sizeXZ,
-            0.5*world_sizeY
+            0.5*world_sizeY,
+            0.5*world_sizeXZ
     );
 
     G4LogicalVolume* logicWorld = 
@@ -59,7 +59,7 @@ G4VPhysicalVolume* CascadesG4DetectorConstruction::Construct()
 
     G4Box* solidDet = 
     new G4Box ("Detector",
-            0.5*det_sizeXZ, 0.5*det_sizeXZ, 0.5*det_sizeY
+            0.5*det_sizeXZ, 0.5*det_sizeY,  0.5*det_sizeXZ
     );
 
     G4LogicalVolume* logicDet = 
