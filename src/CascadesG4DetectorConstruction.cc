@@ -24,7 +24,7 @@ G4VPhysicalVolume* CascadesG4DetectorConstruction::Construct()
     
     G4double det_sizeXZ = 80*cm, det_sizeY = 25*cm;
 
-    G4Material* det_mat = nist->FindOrBuildMaterial("G4_Au");
+    G4Material* det_mat = nist->FindOrBuildMaterial("CsI");
 
     G4bool checkOverlaps = true;
 
