@@ -32,7 +32,7 @@ G4bool CascadesG4DetectorSD::ProcessHits(G4Step* step, G4TouchableHistory* histo
     // угол равен пи/2 , минимальный -0
     G4String const det_particle = step->GetTrack()->GetDefinition()->GetParticleName();
 
-	if( (energy >=0.0 && energy < 50*MeV) && (angle >=0.0 && angle < 1.5707) )
+	if( (energy >=0.0 && energy < 200*MeV) && (angle >=0.0 && angle < 1.5707) )
     {
         energies.push_back(energy);
         angles.push_back(angle);
@@ -45,8 +45,8 @@ G4bool CascadesG4DetectorSD::ProcessHits(G4Step* step, G4TouchableHistory* histo
 
 CascadesG4DetectorSD::~CascadesG4DetectorSD()
 {
-	ofstream file("spectrum.dat");
-
+    ofstream file("spectrum.dat");
+    file.precision(5);
     file << "Energy\t\t" << " " << "angle\t\t" << "particle" << endl << endl;
     int length = energies.size();
 	for(int i = 0; i<length; i++)
