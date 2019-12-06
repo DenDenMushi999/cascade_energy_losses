@@ -51,6 +51,7 @@ target_link_libraries(cascades ${Geant4_LIBRARIES})
 set(CASCADES_SCRIPTS
   run1.mac
   vis.mac
+  GPSgun.g4mac
   )
 
 foreach(_script ${CASCADES_SCRIPTS})
