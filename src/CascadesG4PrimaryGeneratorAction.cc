@@ -33,28 +33,6 @@ CascadesG4PrimaryGeneratorAction::~CascadesG4PrimaryGeneratorAction()
 G4GeneralParticleSource* CascadesG4PrimaryGeneratorAction::InitializeGPS()
  {
    G4GeneralParticleSource * gps = new G4GeneralParticleSource();
-   
-   // setup details easier via UI commands see gps.mac
- 
-   // particle type
-   G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
-   G4ParticleDefinition* optPhoton = particleTable->FindParticle("mu-");  
-   gps->GetCurrentSource()->SetParticleDefinition(optPhoton);
- 
-   // set energy distribution
-   G4SPSEneDistribution *eneDist = gps->GetCurrentSource()->GetEneDist() ;
-   eneDist->SetEnergyDisType("Mono"); // or gauss
-   eneDist->SetMonoEnergy(3.*GeV);
- 
-   // set position distribution
-   G4SPSPosDistribution *posDist = gps->GetCurrentSource()->GetPosDist();
-   posDist->SetPosDisType("Point");  // or Point,Plane,Volume,Beam
-   posDist->SetCentreCoords(G4ThreeVector(0.0*cm,0.0*cm,-13.0*cm));
- 
-   // set angular distribution
-   G4SPSAngDistribution *angDist = gps->GetCurrentSource()->GetAngDist();
-   angDist->SetParticleMomentumDirection( G4ThreeVector(0., 0., 1.) );
- 
    return gps;
 }
 
@@ -86,13 +64,6 @@ void CascadesG4PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
       G4Exception("B1PrimaryGeneratorAction::GeneratePrimaries()",
        "MyCode0002",JustWarning,msg);
     }
-    // Объявляем переменные положения пушки частиц
-    G4double x0 = 0;
-    G4double y0 = 10*cm;
-    G4double z0 = 0;
-    // Устанавливаем положение
-    fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));
-    // Генерируем первичное событие
     fParticleGun->GeneratePrimaryVertex(anEvent);
     GPSgun->GeneratePrimaryVertex(anEvent);
 }
