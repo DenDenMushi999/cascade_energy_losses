@@ -9,6 +9,7 @@
 class G4ParticleGun;
 class G4Event;
 class G4Box;
+class G4GeneralParticleSource;
 
 /// Класс определения источника первичных частиц
 class CascadesG4PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
@@ -24,7 +25,10 @@ class CascadesG4PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
     const G4ParticleGun* GetParticleGun() const { return fParticleGun; }
 
   private:
+    G4GeneralParticleSource * InitializeGPS();
+  private:
     G4ParticleGun*  fParticleGun; // указатель на источник частиц
+    G4GeneralParticleSource* GPSgun;
     // Временная переменная объема
     G4Box* fEnvelopeBox;
 };
