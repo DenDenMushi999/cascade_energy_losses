@@ -20,7 +20,7 @@ CascadesG4PrimaryGeneratorAction::CascadesG4PrimaryGeneratorAction()
     // По умолчанию поставим 1 частицу
     G4int n_particle = 1;
     fParticleGun  = new G4ParticleGun(n_particle);
-
+    
     // Получаем встроеную в Geant4 таблицу частиц
     G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
     G4String particleName;
