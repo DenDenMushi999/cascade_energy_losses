@@ -1,5 +1,5 @@
-#include "CascadesG4DetectorConstruction.hh"
-#include "CascadesG4DetectorSD.hh"
+#include "DetectorConstruction.hh"
+#include "DetectorSD.hh"
 #include "G4RunManager.hh"
 #include "G4SDManager.hh"
 #include "G4NistManager.hh"
@@ -7,16 +7,19 @@
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
 #include "G4SystemOfUnits.hh"
+#include "G4UnitsTable.hh"
+#include "G4Material.hh"
 
-
-CascadesG4DetectorConstruction::CascadesG4DetectorConstruction()
+DetectorConstruction::DetectorConstruction()
 : G4VUserDetectorConstruction()
 { }
 
-CascadesG4DetectorConstruction::~CascadesG4DetectorConstruction()
-{ }
+DetectorConstruction::~DetectorConstruction()
+{
+   delete materCsI;
+}
 
-G4VPhysicalVolume* CascadesG4DetectorConstruction::Construct()
+G4VPhysicalVolume* DetectorConstruction::Construct()
 {
     //create an instance of class which from we can get
     //standart materials
@@ -24,7 +27,13 @@ G4VPhysicalVolume* CascadesG4DetectorConstruction::Construct()
     
     G4double det_sizeXZ = 80*cm, det_sizeY = 25*cm;
 
-    G4Material* det_mat = nist->FindOrBuildMaterial("G4_Au");
+    G4Element* elemCs = nist->FindOrBuildElement("Cs");
+    G4Element* elemI  = nist->FindOrBuildElement("I");
+    materCsI    = new G4Material( "CsI(Tl)"      , 4.53  * g/cm3 , 2       );
+    materCsI    -> AddElement( elemCs ,  5  );
+    materCsI    -> AddElement( elemI  ,  5  );
+
+    G4Material* det_mat = nist->FindOrBuildMaterial("CsI(Tl)");
 
     G4bool checkOverlaps = true;
 
@@ -80,11 +89,12 @@ G4VPhysicalVolume* CascadesG4DetectorConstruction::Construct()
     return physWorld;
 }
 
-void CascadesG4DetectorConstruction::ConstructSDandField()
+void DetectorConstruction::ConstructSDandField()
 {
     G4String trackerChamberSDname = "Detector";
-    CascadesG4DetectorSD* aTrackerSD = new CascadesG4DetectorSD(trackerChamberSDname);
+    DetectorSD* aTrackerSD = new DetectorSD(trackerChamberSDname);
     G4SDManager::GetSDMpointer()->AddNewDetector(aTrackerSD);
 
     SetSensitiveDetector("Detector", aTrackerSD, true);
 }   
+

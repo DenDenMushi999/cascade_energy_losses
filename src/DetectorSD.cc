@@ -5,12 +5,13 @@
 #include <G4Types.hh>
 #include "G4SystemOfUnits.hh"
 #include "G4ThreeVector.hh"
-#include "CascadesG4DetectorSD.hh"
+#include "DetectorSD.hh"
+#include "get_time.hh"
 
 using namespace std;
 // Конструктор чувствительной области, по умолчанию инициализируем нижнюю и верхнюю
 // границы гистограммы в 0 и 50 МэВ
-CascadesG4DetectorSD::CascadesG4DetectorSD(G4String name): 
+DetectorSD::DetectorSD(G4String name): 
 					G4VSensitiveDetector(name)
 {
 	// Обнуляем гистограммы
@@ -19,20 +20,20 @@ CascadesG4DetectorSD::CascadesG4DetectorSD(G4String name):
     vector<G4String>().swap(particles);
 }
 //Вызывается на каждом шаге моделирования частицы, когда она попадает в этот чувствительный объем
-G4bool CascadesG4DetectorSD::ProcessHits(G4Step* step, G4TouchableHistory* history)
+G4bool DetectorSD::ProcessHits(G4Step* step, G4TouchableHistory* history )
 {
 	// Получаем кинетическую энергии частицы с предыдущего шага, т.е. начальную
 	// кинетическую энегрию перед текущим шагом
-	double energy = step->GetPreStepPoint()->GetKineticEnergy();
+    double energy = step->GetPreStepPoint()->GetKineticEnergy();
     
     G4ThreeVector ang = step->GetPreStepPoint()->GetMomentumDirection();
-    G4ThreeVector *centerVector = new G4ThreeVector(0,0,1);
-    double angle=ang.angle(*centerVector);
+    G4ThreeVector *centerVector = new G4ThreeVector(0,-1,0);
+    double angle = ang.angle(*centerVector);
     // Так как у нас измеряются углы между векторами, то максимальный
     // угол равен пи/2 , минимальный -0
     G4String const det_particle = step->GetTrack()->GetDefinition()->GetParticleName();
 
-	if( (energy >=0.0 && energy < 200*MeV) && (angle >=0.0 && angle < 1.5707) )
+	if( (energy >=0.0 && energy < 200*GeV) )
     {
         energies.push_back(energy);
         angles.push_back(angle);
@@ -43,8 +44,9 @@ G4bool CascadesG4DetectorSD::ProcessHits(G4Step* step, G4TouchableHistory* histo
     return true;
 }
 
-CascadesG4DetectorSD::~CascadesG4DetectorSD()
+DetectorSD::~DetectorSD()
 {
+    string date = get_time();
     ofstream file("spectrum.dat");
     file.precision(5);
     file << "Energy\t\t" << " " << "angle\t\t" << "particle" << endl << endl;
@@ -58,4 +60,6 @@ CascadesG4DetectorSD::~CascadesG4DetectorSD()
 
     // Закрываем файл
     file.close();
+
 }
+
