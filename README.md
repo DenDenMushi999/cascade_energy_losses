@@ -5,6 +5,7 @@ This project launch macrofile run3.mac where you can set position of particle gu
 Detector is CsI box with shape 80x40x80
 
 
+![](https://github.com/DenDenMushi999/cascade_energy_losses/edit/wsl_branch2/procces_and_geometry.jpg)
 
 
 You can also launch program with macro file loop.mac that set particle gun in positions of grid 
