@@ -24,11 +24,13 @@ class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
     // Метод для доступа к источнику частиц (пушке частиц ;) )
     const G4ParticleGun* GetParticleGun() const { return fParticleGun; }
 
-  private:
-    G4GeneralParticleSource * InitializeGPS();
+ // private:
+ //   G4GeneralParticleSource * InitializeGPS();
   private:
     G4ParticleGun*  fParticleGun; // указатель на источник частиц
-    G4GeneralParticleSource* GPSgun;
+    
+    //G4GeneralParticleSource* GPSgun;
+    
     // Временная переменная объема
     G4Box* fEnvelopeBox;
 };

@@ -13,7 +13,6 @@ public :
 	ActionInitialization();
 	virtual ~ActionInitialization();
 	virtual void Build() const;
-private :
-        int counter;
+	//virtual void BuildForMaster() const; 
 };
 #endif

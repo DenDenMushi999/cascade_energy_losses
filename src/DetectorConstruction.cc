@@ -16,12 +16,11 @@ DetectorConstruction::DetectorConstruction()
 
 DetectorConstruction::~DetectorConstruction()
 {
-   delete materCsI;
+    delete materCsI;
 }
 
 G4VPhysicalVolume* DetectorConstruction::Construct()
-{
-    //create an instance of class which from we can get
+{    //create an instance of class which from we can get
     //standart materials
     G4NistManager* nist = G4NistManager::Instance();
     
@@ -29,7 +28,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
     G4Element* elemCs = nist->FindOrBuildElement("Cs");
     G4Element* elemI  = nist->FindOrBuildElement("I");
-    materCsI    = new G4Material( "CsI(Tl)"      , 4.53  * g/cm3 , 2       );
+    materCsI    = new G4Material( "CsI(Tl)"  	, 	4.53  * g/cm3 , 2       );
     materCsI    -> AddElement( elemCs ,  5  );
     materCsI    -> AddElement( elemI  ,  5  );
 
@@ -93,6 +92,7 @@ void DetectorConstruction::ConstructSDandField()
 {
     G4String trackerChamberSDname = "Detector";
     DetectorSD* aTrackerSD = new DetectorSD(trackerChamberSDname);
+    
     G4SDManager::GetSDMpointer()->AddNewDetector(aTrackerSD);
 
     SetSensitiveDetector("Detector", aTrackerSD, true);
