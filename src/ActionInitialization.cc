@@ -14,6 +14,6 @@ ActionInitialization::~ActionInitialization()
 void ActionInitialization::Build() const
 {
     	//Задается источник первичных частиц
-    SetUserAction(new PrimaryGeneratorAction());
+	SetUserAction(new PrimaryGeneratorAction);
 // через обязательный класс ExG4PrimaryGeneratorAction01
 }

@@ -18,21 +18,7 @@ PrimaryGeneratorAction::PrimaryGeneratorAction()
   fParticleGun(0),
   fEnvelopeBox(0)
 {
-    //create a gun with 1 particle
-    fParticleGun  = new G4ParticleGun(1);
-    G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
-    G4String particleName;
-    // Ищем частицу, в нашем случае протон
-    G4ParticleDefinition* particle
-        = particleTable->FindParticle(particleName="e-");
-    // Устанавливаем полученную частицу в качестве испускаемого типа начальных частиц в источнике
-    fParticleGun->SetParticleDefinition(particle);
-    // Устанавливаем направление движение частицы по (x,y,z)
-    // Здесь устанавливается направление вдоль оси Z
-    fParticleGun->SetParticlePosition(G4ThreeVector(0.,0.,0.));
-    fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.0,-1.0,0.0));
-    // Установка начальной энергии испускаемых частиц, 50 МэВ
-    fParticleGun->SetParticleEnergy(100*GeV);  
+	fParticleGun  = new G4ParticleGun();
 }
 
 // Деструктор
@@ -40,14 +26,9 @@ PrimaryGeneratorAction::~PrimaryGeneratorAction()
 {
     // удаляем созданный в конструкторе экземпляр класса источника G4ParticleGun
     delete fParticleGun;
-    delete GPSgun;
 }
 
-G4GeneralParticleSource* PrimaryGeneratorAction::InitializeGPS()
- {
-   G4GeneralParticleSource * gps = new G4GeneralParticleSource();
-   return gps;
-}
+
 
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {

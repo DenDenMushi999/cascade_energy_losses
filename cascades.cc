@@ -12,17 +12,22 @@
 #include "G4UIExecutive.hh"//Выбор соответствующего интерфейса пользователя
 #endif
 
+#ifndef G4UI_USE
+#include "UIterminal.hh"
+#endif
 
 int main(int argc, char** argv)
 {
     G4RunManager* runManager = new G4RunManager;
-
+    
     runManager->SetUserInitialization(new DetectorConstruction());
     runManager->SetUserInitialization(new QGSP_BERT_HP());
-    
     runManager->SetUserInitialization(new ActionInitialization());
     runManager->Initialize();
 
+   
+    //uncomment this to apply visualization
+    /*
     G4VisManager* visManager = new G4VisExecutive;
     visManager->Initialize();
 
@@ -40,8 +45,9 @@ int main(int argc, char** argv)
         ui->SessionStart();//Запуск интерфейса пользователя
         delete ui;//Удаление интерфейса пользователя
         #endif
+    
     }
-    else 
+    else  
     {
         // Если были переданы параметры, то включаем пакетный режим
         G4String command = "/control/execute ";//Записываем в строковую переменную
@@ -51,6 +57,21 @@ int main(int argc, char** argv)
         // проекта в пакетном режиме
         UImanager->ApplyCommand(command+fileName);//Выполнение команды
     }
+    */
+
+    /*
+    G4UIsession* session = new G4UIterminal;
+    session->SessionStart();
+    delete session;
+    */
+
+    //launch macrofile
+    ///*
+    G4UImanager* UImanager = G4UImanager::GetUIpointer();
+    G4String command = "/control/execute " ;
+    G4String fileName = "run3.mac" ;
+    UImanager->ApplyCommand(command+fileName);
+    //*/
 
     delete runManager;
     return 0;

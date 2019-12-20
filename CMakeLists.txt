@@ -52,6 +52,11 @@ set(CASCADES_SCRIPTS
   run1.mac
   vis.mac
   GPSgun.g4mac
+  run2.mac
+  loop.mac
+  X_bias.mac
+  Z_bias.mac
+  run3.mac
   )
 
 foreach(_script ${CASCADES_SCRIPTS})
