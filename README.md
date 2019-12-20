@@ -9,6 +9,4 @@ This project launch macrofile run3.mac where you can set position of particle gu
 ```
 
 You can also launch program with macro file loop.mac that set particle gun in positions of grid 
-$$
- X = 5 
-$$
+$$ X \in  (-40,-39, ... , 39, 40)  $$
