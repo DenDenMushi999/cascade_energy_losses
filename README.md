@@ -1,4 +1,4 @@
-# cascade_energy_losses
+# Cascade energy losses
 This projet is created as part of my research work in MEPHI university in department of "expremental nuclear physics and space physics".
 Briefly, my work is to explore how much energy of eletromagnetic cascades detector cannot registrate if the cascades rises near to edges of detector.
 
