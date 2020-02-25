@@ -1,5 +1,6 @@
 # cascade_energy_losses
-Attempt to count losses of energy of cascades near to edges of detector
+This projet is created as part of my research work in MEPHI university in department of "expremental nuclear physics and space physics".
+Briefly, my work is to explore how much energy of eletromagnetic cascades detector cannot registrate if the cascades rises near to edges of detector.
 
 This project launch macrofile run3.mac where you can set position of particle gun
 Detector is CsI box with shape 80x40x80
