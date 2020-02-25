@@ -9,7 +9,7 @@ Detector is CsI box with shape 80x40x80
 ![](procces_and_geometry.jpg)
 
 
-You can also launch program with macro file loop.mac that set particle gun in positions of grid 
+You can also launch program with macro file loop.mac that run procces with setting particle gun to different positions of grid 
             
 X = (-40,-39, ... , 39, 40)  ,  Z = (-40,-39, ... , 39, 40)
 
