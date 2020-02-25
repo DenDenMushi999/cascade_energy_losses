@@ -8,28 +8,51 @@
 #include "DetectorSD.hh"
 #include "get_time.hh"
 #include "G4RunManager.hh"
-#include "RunAction.hh"
 
 using namespace std;
 // Конструктор чувствительной области, по умолчанию инициализируем нижнюю и верхнюю
 // границы гистограммы в 0 и 200 ГэВ
-DetectorSD::DetectorSD(G4String name): 
-					G4VSensitiveDetector(name)
+DetectorSD::DetectorSD(G4String name)
+	: G4VSensitiveDetector(name)
 {
-	vector<G4double>().swap(energies);
-	vector<G4double>().swap(angles);
-	vector<G4String>().swap(particles);
-	vector<G4int>().swap(particleIDs);
-	vector<G4double>().swap(dEs);
-	vector<G4double>().swap(X);
-	vector<G4double>().swap(Y); 
-	vector<G4double>().swap(Z);
+	G4cout << "\n\n ------- The program in constructor of DetectorSD ------- " << G4endl << G4endl ; 
 }
+
+/*
+void DetectorSD::append_energy(G4double E )
+{   
+	energies.push_back(E);	
+}
+void DetectorSD::append_dE(G4double dE )
+{   
+	dEs.push_back(dE);  
+}  
+void DetectorSD::append_edep(G4double edep )
+{	edeps.push_back(edep);  }  
+void DetectorSD::append_ID(G4int ID )
+{   IDs.push_back(ID);   }  
+void DetectorSD::incr_edep(G4double edep)
+{   edepTotal += edep;  } 
+void DetectorSD::incr_dE(G4double dE)
+{   dEtotal += dE;   }
+*/
+
 //Вызывается на каждом шаге моделирования частицы, когда она попадает в этот чувствительный объем
 G4bool DetectorSD::ProcessHits(G4Step* step, G4TouchableHistory* history )
 {
    	// get energy in begin of step
-	double energy = step->GetPreStepPoint()->GetKineticEnergy();
+	G4double energy = step->GetPreStepPoint()->GetKineticEnergy();
+	
+	if ( energy > 99995) 
+	{
+		G4Track* const track = step->GetTrack();
+		G4ThreeVector pos = track->GetPosition();
+		G4cout << "\n ---------    New Run! " << edepTotal.size() << " , X = "<< pos[0] << " , Z = " << pos[2] 
+		<< " ----------" << G4endl;
+		edepTotal.push_back(0.);
+		X.push_back(pos[0]);
+		Z.push_back(pos[2]);
+	}	
 
 	//get angle in begin of step
 	/*G4ThreeVector ang = step->GetPreStepPoint()->GetMomentumDirection();
@@ -38,59 +61,69 @@ G4bool DetectorSD::ProcessHits(G4Step* step, G4TouchableHistory* history )
 	*/
 
 	// get trackID to differ particles with each other
+	
 	/*
 	G4Track* const track = step->GetTrack();
 	G4int trackID = track->GetTrackID();
 	*/
 
 	//get position
-	G4ThreeVector pos = track->GetPosition();
+	//G4ThreeVector pos = track->GetPosition();
 
 	//get particle name of step
 	//G4String const det_particle = step->GetTrack()->GetDefinition()->GetParticleName();
 	
 	//get dE of step
+	/*
 	G4double dE = step->GetDeltaEnergy();
+	dEtotal += dE ;
+	*/
 
 	//G4cout << "The step's particle ID:" << trackID << endl << endl;
+	G4double edep = step->GetTotalEnergyDeposit();
+	*(edepTotal.end()-1) += edep;
 
-
-	if( (energy >=0.0) )
-	{
-	energies.push_back(energy);
+	/*
+	runaction->append_energy(energy);
+	runaction->append_dE(dE);
+	runaction->append_edep(edep);
 	//angles.push_back(angle);
 	//particles.push_back(det_particle);
-	//particleIDs.push_back(trackID);
-	dEs.push_back(dE);
-	X.push_back(pos[0]);
-	Y.push_back(pos[1]);
-	Z.push_back(pos[2]);
-	}
-    
+	runaction->append_particleID(trackID);
+	runaction->incr_dE(dE);
+	runaction->incr_edep(edep);
+	//X.push_back(pos[0]);
+	//Y.push_back(pos[1]);
+	//Z.push_back(pos[2]);
+    */
+
+	/*
+    energies.push_back(energy);
+    dEs.push_back(dE);
+    edeps.push_back(edep);
+    IDs.push_back(trackID);
+    dEtotal += dE;
+	*/
+	
 	return true;
 }
 
 DetectorSD::~DetectorSD()
 {
+	///*
 	G4cout << " --- Program in destructor ~Ex2G4DetectorSD() --- " << G4endl ;
 	//string date = get_time();
 	ofstream file("spectrum.dat");
-	file.precision(5);
-	file << "Energy\t\t" << "dE\t\t" 
-	     << "X\t\t" << "Y\t\t" << "Z\t\t" << endl << endl;
-	int length = energies.size();
+
+	int length = edepTotal.size();
 	for(int i = 0; i<length; i++)
 	{
-		file << energies[i]/MeV << "\t\t"
-			<< dEs[i] << "\t\t"
-			/*<< angles[i] << "\t\t"
-			<< particles[i] << "\t\t"
-		  	<< particleIDs[i] << "\t\t"
-			*/
-			<< X[i] << "\t\t"
-	      		<< Y[i] << "\t\t"
-			<< Z[i] << "\t\t" << endl ;
+		file << edepTotal[i] << "  "
+			 << X[i] << "  "
+			 << Z[i]
+			 << endl;
 	}
-
 	file.close();
+	//*/
 }
+

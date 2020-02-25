@@ -12,12 +12,21 @@
 
 DetectorConstruction::DetectorConstruction()
 : G4VUserDetectorConstruction()
-{ }
+{
+	G4cout << "\n\n ---- The program in constructor of Detector Construction "
+	<< G4endl << G4endl;		
+}
 
 DetectorConstruction::~DetectorConstruction()
 {
     delete materCsI;
+	G4cout << "\n\n ------The program in destructor of Detector Construction  ---- " 
+	<< G4endl << G4endl;
 }
+/*
+DetectorSD* DetectorConstruction::getDetectorSD()
+{ return aTrackerSD; }
+*/
 
 G4VPhysicalVolume* DetectorConstruction::Construct()
 {    //create an instance of class which from we can get

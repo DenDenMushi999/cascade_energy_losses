@@ -7,12 +7,17 @@
 /// Имя класса может быть другим, и он должен наследоваться от
 /// класса G4VUserActionInitialization
 
+class DetectorConstruction;
+
+
 class ActionInitialization : public G4VUserActionInitialization
 {
 public :
 	ActionInitialization();
 	virtual ~ActionInitialization();
 	virtual void Build() const;
+
+	//DetectorConstruction* fDetectorConstruction;
 	//virtual void BuildForMaster() const; 
 };
 #endif
