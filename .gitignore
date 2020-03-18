@@ -1,3 +1,8 @@
 $ cat .gitignore
 *.[oa]
+*.swm
+*.swl
+*.swn
+*.swo
+*.swp
 *~
