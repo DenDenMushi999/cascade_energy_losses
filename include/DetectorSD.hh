@@ -10,17 +10,7 @@ class G4TouchableHistory;
 class DetectorSD: public G4VSensitiveDetector
 	{
 public :
-	
-	/*
-	std::vector<G4double> energies;
-	//std::vector<G4double> angles;
-	//std::vector<G4String> particles;
-	std::vector<G4int> IDs;
-	std::vector<G4double> dEs;
-	std::vector<G4double> edeps;
-	G4double dEtotal;
-	G4double edepTotal;
-	*/
+
 	std::vector<G4double> X;
 	//std::vector<G4double> Y;
 	

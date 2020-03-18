@@ -28,8 +28,6 @@ PrimaryGeneratorAction::~PrimaryGeneratorAction()
     delete fParticleGun;
 }
 
-
-
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
     //Эта функция вызывается в начале каждого первичного события запуска частицы

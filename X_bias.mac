@@ -1,3 +1,2 @@
-/control/loop Z_bias.mac X -39.5 39.5 4
-
+/control/loop Z_bias.mac X -39.9 -35.0 0.1
 

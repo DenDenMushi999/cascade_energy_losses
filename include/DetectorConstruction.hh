@@ -16,8 +16,6 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 public :
     DetectorConstruction();
     G4Material*  materCsI;
-    //DetectorSD* aTrackerSD;
-    //DetectorSD* getDetectorSD();
     virtual ~DetectorConstruction();
 
     virtual G4VPhysicalVolume* Construct();
