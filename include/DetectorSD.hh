@@ -10,13 +10,15 @@ class G4TouchableHistory;
 class DetectorSD: public G4VSensitiveDetector
 	{
 public :
-
+	G4double X;
+	G4double Z;
+	G4double edepTotal;
+	int k = 0;
+	/*
 	std::vector<G4double> X;
-	//std::vector<G4double> Y;
-	
 	std::vector<G4double> Z;
-
 	std::vector<G4double> edepTotal;
+	*/
 public :
 	    DetectorSD(G4String name );
 	    ~DetectorSD();

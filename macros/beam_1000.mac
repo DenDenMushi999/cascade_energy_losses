@@ -1,6 +1,5 @@
-
 /gun/particle e-
-/gun/energy 100 GeV
-/gun/position  {X} 0 {Z} mm
+/gun/position 380 0 380 mm
 /gun/direction 0 -1 0
+/gun/energy 100 GeV
 /run/beamOn 1000
