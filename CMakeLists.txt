@@ -79,9 +79,6 @@ foreach(_script ${CASCADES_SCRIPTS})
     )
 endforeach()
 
-set(FILES_TO_ADD 
-	test.txt)
-
 source_group("Test_folder" FILES ${FILES_TO_ADD})
 
 # Для внутеренего использования в Geant4, но не имеет влияния если проект
