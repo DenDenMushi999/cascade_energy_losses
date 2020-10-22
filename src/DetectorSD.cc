@@ -2,95 +2,102 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <math.h>
 #include <G4Types.hh>
 #include "G4SystemOfUnits.hh"
 #include "G4ThreeVector.hh"
 #include "DetectorSD.hh"
 #include "get_time.hh"
 #include "G4RunManager.hh"
-#include "RunAction.hh"
+#define PI 3.14159265     
 
 using namespace std;
 // Конструктор чувствительной области, по умолчанию инициализируем нижнюю и верхнюю
 // границы гистограммы в 0 и 200 ГэВ
-DetectorSD::DetectorSD(G4String name): 
-					G4VSensitiveDetector(name)
+DetectorSD::DetectorSD(G4String name)
+	: G4VSensitiveDetector(name)
 {
-	vector<G4double>().swap(energies);
-	vector<G4double>().swap(angles);
-	vector<G4String>().swap(particles);
-	vector<G4int>().swap(particleIDs);
-	vector<G4double>().swap(dEs);
-	vector<G4double>().swap(X);
-	vector<G4double>().swap(Y); 
-	vector<G4double>().swap(Z);
+	G4cout << "\n\n ------- The program in constructor of DetectorSD ------- " << G4endl << G4endl ; 
 }
+
+
 //Вызывается на каждом шаге моделирования частицы, когда она попадает в этот чувствительный объем
 G4bool DetectorSD::ProcessHits(G4Step* step, G4TouchableHistory* history )
 {
-   	// get energy in begin of step
-	double energy = step->GetPreStepPoint()->GetKineticEnergy();
+   	// get energy in initial step
+	G4double energy = step->GetPreStepPoint()->GetKineticEnergy();
 
-	//get angle in begin of step
-	/*G4ThreeVector ang = step->GetPreStepPoint()->GetMomentumDirection();
-	G4ThreeVector *centerVector = new G4ThreeVector(0,-1,0);
-	double angle = ang.angle(*centerVector);
-	*/
+	if ( energy > 99995)  //condition of detect an initial position of particle
+	{
+		//G4cout << "particle detected!" << endl ;
+		//Write to file a previous values
 
-	// get trackID to differ particles with each other
-	/*
-	G4Track* const track = step->GetTrack();
-	G4int trackID = track->GetTrackID();
-	*/
+		G4Track* const track = step->GetTrack();
+		G4ThreeVector pos = track->GetPosition();
+		G4ThreeVector dir = track->GetMomentumDirection();
+		double angle = atan(dir[0]/dir[1])*180/PI;
+		X = pos[0];
+		Z = pos[2];
 
-	//get position
-	G4ThreeVector pos = track->GetPosition();
+		G4cout << "\n ---------     New run ! " << k << " , X = " << X <<" , Z = " << Z 
+		<< " , theta = " << angle << " deg    --------- " << G4endl;
 
-	//get particle name of step
-	//G4String const det_particle = step->GetTrack()->GetDefinition()->GetParticleName();
-	
-	//get dE of step
-	G4double dE = step->GetDeltaEnergy();
+		ofstream file("center_angles.dat", ios::app);
+	    if (file.is_open())
+			{
+				file<< edepTotal << "  "
+					<< X << "  "
+					<< Z << "  "
+					<< angle
+					<< endl;
+		}
+		file.close();
+
+		k+=1;
+
+		edepTotal = 0.0;
+		G4double edep = step->GetTotalEnergyDeposit();
+		edepTotal += edep;
+		
+		//G4cout << "\n ---------    New Run! " << edepTotal.size() << " , X = "<< pos[0] << " , Z = " << pos[2] 
+		//<< " ----------" << G4endl;
+		
+		/*edepTotal.push_back(0.);
+		X.push_back(pos[0]);
+		Z.push_back(pos[2]);
+		*/
+	}
+	else 
+	{
+		//store edep until new particle launched
+		G4double edep = step->GetTotalEnergyDeposit();
+		edepTotal += edep;
+	}
 
 	//G4cout << "The step's particle ID:" << trackID << endl << endl;
-
-
-	if( (energy >=0.0) )
-	{
-	energies.push_back(energy);
-	//angles.push_back(angle);
-	//particles.push_back(det_particle);
-	//particleIDs.push_back(trackID);
-	dEs.push_back(dE);
-	X.push_back(pos[0]);
-	Y.push_back(pos[1]);
-	Z.push_back(pos[2]);
-	}
-    
+	//*(edepTotal.end() - 1) += edep;
+	
 	return true;
 }
 
 DetectorSD::~DetectorSD()
 {
+	///*
 	G4cout << " --- Program in destructor ~Ex2G4DetectorSD() --- " << G4endl ;
 	//string date = get_time();
-	ofstream file("spectrum.dat");
-	file.precision(5);
-	file << "Energy\t\t" << "dE\t\t" 
-	     << "X\t\t" << "Y\t\t" << "Z\t\t" << endl << endl;
-	int length = energies.size();
+	/*
+	ofstream file("spectrum3.dat");
+
+	int length = edepTotal.size();
 	for(int i = 0; i<length; i++)
 	{
-		file << energies[i]/MeV << "\t\t"
-			<< dEs[i] << "\t\t"
-			/*<< angles[i] << "\t\t"
-			<< particles[i] << "\t\t"
-		  	<< particleIDs[i] << "\t\t"
-			*/
-			<< X[i] << "\t\t"
-	      		<< Y[i] << "\t\t"
-			<< Z[i] << "\t\t" << endl ;
+		file << edepTotal[i] << "  "
+			 << X[i] << "  "
+			 << Z[i]
+			 << endl;
 	}
-
 	file.close();
+	
+	*/
 }
+

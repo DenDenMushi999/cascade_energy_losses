@@ -18,7 +18,8 @@ PrimaryGeneratorAction::PrimaryGeneratorAction()
   fParticleGun(0),
   fEnvelopeBox(0)
 {
-	fParticleGun  = new G4ParticleGun();
+  G4int n_particle = 1;
+	fParticleGun  = new G4ParticleGun(n_particle);
 }
 
 // Деструктор
@@ -28,13 +29,9 @@ PrimaryGeneratorAction::~PrimaryGeneratorAction()
     delete fParticleGun;
 }
 
-
-
-void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
+void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent )
 {
-    //Эта функция вызывается в начале каждого первичного события запуска частицы
-    // Для избежания зависимости этого класса от класса DetectorConstruction,
-    // мы получаем ссылку на объем детектора через класс G4LogicalVolumeStore
+
     G4double envSizeCascadesXZ = 0;
     G4double envSizeY = 0;
     // Проверяем, не пустая ли ссылка на fEnvelopeBox
@@ -55,9 +52,28 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
       msg << "Envelope volume of box shape not found.\n";
       msg << "Perhaps you have changed geometry.\n";
       msg << "The gun will be place at the center.";
-      G4Exception("B1PrimaryGeneratorAction::GeneratePrimaries()",
+      G4Exception("PrimaryGeneratorAction::GeneratePrimaries()",
        "MyCode0002",JustWarning,msg);
     }
+
+    ///////// Set 100 Gev electrons ///////////////////
+    
+    /*
+    G4int n_particle = 1;
+    G4ParticleGun* fParticleGun  = new G4ParticleGun(n_particle);
+    */
+    G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
+    G4String particleName;
+    G4ParticleDefinition* particle
+        = particleTable->FindParticle(particleName="e-");
+    fParticleGun->SetParticleDefinition(particle);
+    
+    fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,-1.,0.));
+    fParticleGun->SetParticlePosition(G4ThreeVector(0.,0.,0.));
+    fParticleGun->SetParticleEnergy(100.*GeV);
     fParticleGun->GeneratePrimaryVertex(anEvent);
+    
+    /////////  end of set ////////////////////////////////////
+    
     //GPSgun->GeneratePrimaryVertex(anEvent);
 }

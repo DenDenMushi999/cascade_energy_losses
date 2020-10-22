@@ -50,22 +50,39 @@ target_link_libraries(cascades ${Geant4_LIBRARIES})
 #
 set(CASCADES_SCRIPTS
   run1.mac
-  vis.mac
-  GPSgun.g4mac
   run2.mac
+  run3.mac
+  center_angles.mac
+  beam_1000.mac
+  beam_Zline.mac
+  beam_Xline.mac
+  GPSgun.g4mac
   loop.mac
+  loop_Zline.mac
+  loop_Xline.mac
   X_bias.mac
   Z_bias.mac
-  run3.mac
+  vis.mac
+  init_vis.mac
   )
+
+# There are specified directories where to bring files from( I argument in configure_file)
+# and where to put them (II argument). 
+# Here scripts are searching in ${PROJECT_SOURCE_DIR}/macros folder
+# and are placing in ${PROJECT_BINARY_DIR}/macros directory
 
 foreach(_script ${CASCADES_SCRIPTS})
   configure_file(
-    ${PROJECT_SOURCE_DIR}/${_script}
-    ${PROJECT_BINARY_DIR}/${_script}
+    ${PROJECT_SOURCE_DIR}/macros/${_script}
+    ${PROJECT_BINARY_DIR}/macros/${_script}
     COPYONLY
     )
 endforeach()
+
+set(FILES_TO_ADD 
+	test.txt)
+
+source_group("Test_folder" FILES ${FILES_TO_ADD})
 
 # Для внутеренего использования в Geant4, но не имеет влияния если проект
 # компилируется для отдельного использования
