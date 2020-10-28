@@ -2,8 +2,9 @@
 Attempt to count losses of energy of cascades near to edges of detector
 
 This project launch macrofile run3.mac where you can set position of particle gun
-Detector is CsI box with shape 80x40x80
+Detector is as a 22x22-grid of CsI strips with shape 36x36x296 mm 
 
+![](geometry.jpg)
 
 ![](procces_and_geometry.jpg)
 
