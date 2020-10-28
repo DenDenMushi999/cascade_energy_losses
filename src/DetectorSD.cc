@@ -74,7 +74,7 @@ G4bool DetectorSD::ProcessHits(G4Step* step, G4TouchableHistory* history )
 		edepTotal += edep;
 	}
 
-	//G4cout << "The step's particle ID:" << trackID << endl << endl;
+	//G4cout << "The step"s particle ID:" << trackID << endl << endl;
 	//*(edepTotal.end() - 1) += edep;
 	
 	return true;

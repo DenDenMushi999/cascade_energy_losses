@@ -71,26 +71,26 @@
 #
 # Decorations
 # Name
-#/vis/set/textColour green
-#/vis/set/textLayout right
-#/vis/scene/add/text2D 0.9 -.9 24 ! ! exampleB1
+/vis/set/textColour green
+/vis/set/textLayout right
+/vis/scene/add/text2D 0.9 -.9 24 ! ! Cascades
 # or, if your system does not support right-adjustment
 #/vis/scene/add/text2D 0 -.9 24 ! ! exampleB1
-#/vis/set/textLayout    # Revert to normal (left adjusted) layout
-#/vis/set/textColour    # Revert to default text colour (blue)
+/vis/set/textLayout    # Revert to normal (left adjusted) layout
+/vis/set/textColour    # Revert to default text colour (blue)
 #
 # Axes, scale, etc.
 /vis/scene/add/scale   # Simple scale line
 /vis/scene/add/axes    # Simple axes: x=red, y=green, z=blue.
 /vis/scene/add/eventID # Drawn at end of event
-#/vis/scene/add/date    # Date stamp
-#/vis/scene/add/logo2D  # Simple logo
-#/vis/scene/add/logo    # 3D logo
+/vis/scene/add/date    # Date stamp
+/vis/scene/add/logo2D  # Simple logo
+/vis/scene/add/logo    # 3D logo
 #
 # Frame
-#/vis/set/colour red
-#/vis/set/lineWidth 2
-#/vis/scene/add/frame   # Simple frame around the view
+/vis/set/colour red
+/vis/set/lineWidth 2
+/vis/scene/add/frame   # Simple frame around the view
 /vis/set/colour        # Revert to default colour (white)
 /vis/set/lineWidth     # Revert to default line width (1.)
 #
@@ -115,8 +115,8 @@
 #
 # For file-based drivers, use this to create an empty detector view:
 #/vis/viewer/flush
-/gun/particle proton
-/gun/energy 50 MeV
-/tracking/verbose 2
+#/gun/particle proton
+#/gun/energy 50 MeV
+#/tracking/verbose 2
 #
-/run/beamOn 1
+#/run/beamOn 1

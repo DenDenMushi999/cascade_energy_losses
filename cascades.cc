@@ -1,5 +1,3 @@
-
-
 #ifdef G4MULTITHREADED
 #include "G4MTRunManager.hh"
 #else
@@ -80,7 +78,7 @@ int main(int argc, char** argv)
 	#ifdef Geant4_DATASETS
 		G4cout << G4endl << Geant4_DATASETS << G4endl;
 	#else
-		G4cout << 'The project has no datasets' << G4endl;
+		G4cout << "The project has no datasets" << G4endl;
 	#endif
 
 	
