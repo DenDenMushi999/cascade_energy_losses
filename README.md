@@ -8,9 +8,4 @@ Detector is as a 22x22-grid of CsI strips with shape 36x36x296 mm
 
 ![](procces_and_geometry.jpg)
 
-
-You can also launch program with macro file loop.mac that set particle gun in positions of grid 
-            
-X = (-40,-39, ... , 39, 40)  ,  Z = (-40,-39, ... , 39, 40)
-
 for execute program with loop.mac edit file `cascades.cc`.  uncomment strings with vismanager applying and comment block with applying `run3.mac`. 
