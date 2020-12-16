@@ -1,19 +1,23 @@
-#include <G4Step.hh>
+
 #include <fstream>
 #include <iostream>
 #include <vector>
 #include <math.h>
 #include <G4Types.hh>
 #include "G4SystemOfUnits.hh"
+
+#include <G4Step.hh>
 #include "G4ThreeVector.hh"
 #include "DetectorSD.hh"
-#include "get_time.hh"
 #include "G4RunManager.hh"
+#include "DetectorConstruction.hh"
+
+#include "get_time.hh"
+
 #define PI 3.14159265     
 
 using namespace std;
-// Конструктор чувствительной области, по умолчанию инициализируем нижнюю и верхнюю
-// границы гистограммы в 0 и 200 ГэВ
+
 DetectorSD::DetectorSD(G4String name)
 	: G4VSensitiveDetector(name)
 {
@@ -25,8 +29,11 @@ DetectorSD::DetectorSD(G4String name)
 G4bool DetectorSD::ProcessHits(G4Step* step, G4TouchableHistory* history )
 {
    	// get energy in initial step
-	G4double energy = step->GetPreStepPoint()->GetKineticEnergy();
+	auto PreStepPoint = step->GetPreStepPoint(); 
+	G4double energy = PreStepPoint->GetKineticEnergy();
 
+	////////////////////// First method of analising Hit ///////////////////////// 
+	/*
 	if ( energy > 99995)  //condition of detect an initial position of particle
 	{
 		//G4cout << "particle detected!" << endl ;
@@ -39,7 +46,7 @@ G4bool DetectorSD::ProcessHits(G4Step* step, G4TouchableHistory* history )
 		X = pos[0];
 		Z = pos[2];
 
-		G4cout << "\n ---------     New run ! " << k << " , X = " << X <<" , Z = " << Z 
+		G4cout << "\n ---------     New event ! " << n_event << " , X = " << X <<" , Z = " << Z 
 		<< " , theta = " << angle << " deg    --------- " << G4endl;
 
 		ofstream file("center_angles.dat", ios::app);
@@ -53,7 +60,7 @@ G4bool DetectorSD::ProcessHits(G4Step* step, G4TouchableHistory* history )
 		}
 		file.close();
 
-		k+=1;
+		n_event+=1;
 
 		edepTotal = 0.0;
 		G4double edep = step->GetTotalEnergyDeposit();
@@ -65,15 +72,28 @@ G4bool DetectorSD::ProcessHits(G4Step* step, G4TouchableHistory* history )
 		/*edepTotal.push_back(0.);
 		X.push_back(pos[0]);
 		Z.push_back(pos[2]);
-		*/
 	}
 	else 
 	{
 		//store edep until new particle launched
-		G4double edep = step->GetTotalEnergyDeposit();
-		edepTotal += edep;
-	}
 
+		// Get number of cell where step is
+		G4int copyNo = PreStepPoint->GetPhysicalVolume()->GetCopyNo();
+		G4int strip_i = copyNo / n_layers;
+		G4int strip_j = copyNo % n_layers;
+
+		//add edep to according strip 
+		G4double edep = step->GetTotalEnergyDeposit();
+		totalEdepStrips[strip_i][strip_j] += edep;
+	}
+	*/
+	///////////////////////////////////////////////////////////////////////////
+
+	//////////////// second method of hit handling. Now I use G4VHit class///////////////////////////////
+
+	CaloHit* hit = new CaloHIt()
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	//G4cout << "The step"s particle ID:" << trackID << endl << endl;
 	//*(edepTotal.end() - 1) += edep;
 	

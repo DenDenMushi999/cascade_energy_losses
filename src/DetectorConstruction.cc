@@ -1,5 +1,7 @@
 #include "DetectorConstruction.hh"
 #include "DetectorSD.hh"
+#include "Constants.hh"
+
 #include "G4RunManager.hh"
 #include "G4SDManager.hh"
 #include "G4NistManager.hh"
@@ -11,6 +13,9 @@
 #include "G4Material.hh"
 #include "G4SubtractionSolid.hh"
 #include "G4AssemblyVolume.hh"
+
+#include "globals.hh"
+
 
 DetectorConstruction::DetectorConstruction()
 : G4VUserDetectorConstruction()
@@ -32,23 +37,6 @@ DetectorSD* DetectorConstruction::getDetectorSD()
 
 G4VPhysicalVolume* DetectorConstruction::Construct()
 {   
-    
-    //////////// Default sizes and variables ////////////////////////////////
-    G4bool checkOverlaps = true;
-    static unsigned int grid_size = 22;
-    G4double det_sizeXZ = 80*cm, det_sizeY = 25*cm;
-
-    G4double world_sizeXY = 120*cm; //Размер по x и y здесь будут одинаковы - ширина и высота
-    G4double world_sizeZ  = 80*cm; //Размер по z - толщина
-
-    G4double strip_sizeXY = 36*mm;
-    G4double strip_sizeZ = 296*mm;
-
-    //G4double airSpace = 0.05*mm;
-    G4double tungstenWidth = 0.1*mm;
-    //G4double CFRP_width = 0.4*mm
-    //G4double edgeCFRP_width = 3*mm;
-    //////////////////////////////////////////////////////////////////////////
 
     ///////////// Create a materCsI /////////////////////////////////////////
     
@@ -106,7 +94,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     G4LogicalVolume* logicStrip = 
     new G4LogicalVolume (solidStrip,
                          det_mat,
-                         "Strip");
+                         "logicStrip");
 
     
     //////////// Create a logical volume of tungsten borders of strips /////////////////
@@ -142,7 +130,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     
 
     ////////////// Create a single logical volume of line of strips ///////////////////
-
+    /*
     G4AssemblyVolume* lineStrips = new G4AssemblyVolume();
     // Rotation and translation of a plate inside the assembly
     G4RotationMatrix Ra;
@@ -155,25 +143,55 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     //G4double CFRP_width = 0.4*mm
     //G4double edgeCFRP_width = 3*mm;
 
-    G4double allStripsWidth = grid_size*strip_sizeXY;
+    G4double allStripsWidth = n_layers*strip_sizeXY;
     G4double x_strip0 = -10.5*strip_sizeXY;
     G4double y_strip0 = 0;
     G4double x_strip = x_strip0;
     
-    for (int i=0; i<grid_size; i++) 
+    for (int i=0; i<n_layers; i++) 
     {
         Ta.setX(x_strip); Ta.setY(0.); Ta.setZ( 0.5*strip_sizeZ);        
         x_strip += strip_sizeXY;
         Tr = G4Transform3D(Ra,Ta);
         lineStrips->AddPlacedVolume( logicStrip, Tr);
     }
+    */
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    /////////// Attempt to place all strips separately /////////////////////////////////
+
+    ////// initial point is in bottom left 
+    G4double x_strip0 = -strip_sizeXY*(n_layers/2 - 0.5);
+    G4double y_strip0 = -strip_sizeXY*(n_layers/2 - 0.5);
+    G4double x_strip = x_strip0;
+    G4double y_strip = y_strip0;
+    G4double z_strip = -strip_sizeZ;
+
+    int pCopyNo = 0;
+    for (int i=0; i<n_layers; i++)
+    {
+        y_strip = y_strip0;
+        for (int j=0; j<n_layers; j++)
+        {
+            pCopyNo = n_layers*i + j;
+            y_strip += strip_sizeXY;
+            new G4PVPlacement(0,
+                            G4ThreeVector(x_strip, y_strip , 0),
+                            logicStrip,
+                            "stripPhys",
+                            logicWorld,
+                            false,
+                            pCopyNo,
+                            checkOverlaps);
+        }
+        x_strip += strip_sizeXY;
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////
 
-    
     /////////// Attempt to place a line of strips //////////////////////////////////////
-    
-    //////////////// 1. Attempt of place 1 strip line. succeed /////////////////////////
+
+    /////////////// 1. Attempt of place 1 strip line. succeed /////////////////////////
     /*
     G4double stripX0 = 0.;
     G4double stripY0 = -10.5*strip_sizeXY; 
@@ -183,22 +201,22 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     lineStrips->MakeImprint( logicWorld, Tr );
     */
     ////////////////// 1.1 Attempt of place all line separately (It works, so I don't understand what the problem in 3-rd step is? ) /////////////////////////
-
+    /*
     G4double stripX0 = 0.;
     G4double stripY0 = -10.5*strip_sizeXY; 
     G4double streipZ0 = 0.;
     G4double stripY = stripY0;  
-    for (int i=0; i<grid_size; i++)
+    for (int i=0; i<n_layers; i++)
     {
         G4ThreeVector Tm( stripX0, stripY, streipZ0);
         Tr = G4Transform3D(Rm,Tm);
         lineStrips->MakeImprint( logicWorld, Tr , 0, true);
         stripY += strip_sizeXY;
     }
-
+    */
     /////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////// 2. Attempt to create an assemble of strip lines (unknown result) ///////////////
-    
+    /////////////// 2. Attempt to create an assemble of strip lines (unknown result) ///////////////
+    /*
     G4AssemblyVolume* gridStrips = new G4AssemblyVolume();
 
     G4double lineStripsX0 = 0.;
@@ -206,14 +224,15 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     G4double lineStreipsZ0 = 0.;
     G4double lineStripsY = lineStripsY0;
 
-    for (int i=0; i<grid_size; i++)
+    for (int i=0; i<n_layers; i++)
     {
         Ta.setX(0.); Ta.setY(lineStripsY*1.05); Ta.setZ(0.);        
         Tr = G4Transform3D(Ra,Ta);
         lineStripsY += strip_sizeXY;
         lineStrips->AddPlacedAssembly( lineStrips, Tr );
     }
-    ///////////////////////// 3. Attempt to place an assemble of ALL strips (unknown result) //////////////
+    */
+    /////////////// 3. Attempt to place an assemble of ALL strips (unknown result) //////////////
     /*
     G4ThreeVector Tm( 0., 0., 0.);
     Tr = G4Transform3D(Rm,Tm);
@@ -222,8 +241,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     //////////////////////////////////////////////////////////////////////////////////////
 
 
-    /////////// Create a full-CsI detector (like full-metal jacket :)) )//////////////////
-    
+    /////////// Create a full-CsI detector ( like full-metal jacket :)) )//////////////////
+    /*
     G4Box* solidDet = 
     new G4Box ("Detector",
             0.5*det_sizeXZ, 0.5*det_sizeY,  0.5*det_sizeXZ
@@ -251,11 +270,14 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
 void DetectorConstruction::ConstructSDandField()
 {
-    G4String trackerChamberSDname = "Detector";
-    DetectorSD* aTrackerSD = new DetectorSD(trackerChamberSDname);
+    G4String CaloSDname = "Calorimeter";
+    DetectorSD* CaloSD = new DetectorSD(CaloSDname);
     
-    G4SDManager::GetSDMpointer()->AddNewDetector(aTrackerSD);
+    G4SDManager* SDmgr = G4SDManager::GetSDMpointer();
+    SDmgr->AddNewDetector(CaloSD);
 
-    SetSensitiveDetector("Detector", aTrackerSD, true);
+    SetSensitiveDetector("logicStrip",  // name of logical volume of strip defined in Construct()
+                        CaloSD,         // SD object
+                        true);          // don't know, maybe it should be false
 }   
 
