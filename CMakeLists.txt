@@ -51,16 +51,7 @@ set(CASCADES_SCRIPTS
   run1.mac
   run2.mac
   run3.mac
-  center_angles.mac
-  beam_1000.mac
-  beam_Zline.mac
-  beam_Xline.mac
   GPSgun.g4mac
-  loop.mac
-  loop_Zline.mac
-  loop_Xline.mac
-  X_bias.mac
-  Z_bias.mac
   vis.mac
   init_vis.mac
   )
@@ -77,11 +68,6 @@ foreach(_script ${CASCADES_SCRIPTS})
     COPYONLY
     )
 endforeach()
-
-set(FILES_TO_ADD 
-	test.txt)
-
-source_group("Test_folder" FILES ${FILES_TO_ADD})
 
 # Для внутеренего использования в Geant4, но не имеет влияния если проект
 # компилируется для отдельного использования

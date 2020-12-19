@@ -45,6 +45,8 @@ int main(int argc, char** argv)
     runManager->SetUserInitialization(new ActionInitialization());
 	runManager->Initialize();
 
+	UImanager->ApplyCommand("/control/execute macros/start_setup.mac");
+
 	/////////// Launch particle with angles from 0 to pi/4 with step pi/36 /////////
 	/*
 	for (double angle= M_PI/36; angle <= M_PI/4; angle+= M_PI/36)

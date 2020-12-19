@@ -31,9 +31,9 @@ PrimaryGeneratorAction::~PrimaryGeneratorAction()
 
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent )
 {
-
-    G4double envSizeCascadesXZ = 0;
-    G4double envSizeY = 0;
+    /*
+    G4double envSizeCascadesXY = 0;
+    G4double envSizeZ = 0;
     // Проверяем, не пустая ли ссылка на fEnvelopeBox
     if (!fEnvelopeBox)
     {
@@ -42,10 +42,10 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent )
         = G4LogicalVolumeStore::GetInstance()->GetVolume("Detector");
       if ( envLV ) fEnvelopeBox = dynamic_cast<G4Box*>(envLV->GetSolid());
     }
-    // Получаем размеры объема, стороны по x и z предполагается что одинаковы
+    // Получаем размеры объема, стороны по x и y предполагается что одинаковы
     if ( fEnvelopeBox ) {
-      envSizeCascadesXZ = fEnvelopeBox->GetXHalfLength()*2.;
-      envSizeY = fEnvelopeBox->GetYHalfLength()*2.;
+      envSizeCascadesXY = fEnvelopeBox->GetXHalfLength()*2.;
+      envSizeZ = fEnvelopeBox->GetZHalfLength()*2.;
     }
     else  {//Если ссылка на fEnvelopeBox пустая, выдаем предупреждение
       G4ExceptionDescription msg;
@@ -55,6 +55,7 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent )
       G4Exception("PrimaryGeneratorAction::GeneratePrimaries()",
        "MyCode0002",JustWarning,msg);
     }
+    */
 
     ///////// Set 100 Gev electrons ///////////////////
     
@@ -62,15 +63,19 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent )
     G4int n_particle = 1;
     G4ParticleGun* fParticleGun  = new G4ParticleGun(n_particle);
     */
+    
+    /*
     G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
     G4String particleName;
     G4ParticleDefinition* particle
         = particleTable->FindParticle(particleName="e-");
     fParticleGun->SetParticleDefinition(particle);
     
-    fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,-1.,0.));
-    fParticleGun->SetParticlePosition(G4ThreeVector(0.,0.,0.));
+    fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.));
+    //fParticleGun->SetParticlePosition(G4ThreeVector(0.,0., -30.*cm));
     fParticleGun->SetParticleEnergy(100.*GeV);
+    */
+   
     fParticleGun->GeneratePrimaryVertex(anEvent);
     
     /////////  end of set ////////////////////////////////////

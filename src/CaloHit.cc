@@ -3,7 +3,7 @@
 CaloHit::CaloHit(const G4int kHitIDnumber)
     : gHitID(kHitIDnumber)
 {
-    return 
+    return ;
 }
 
 CaloHit::~CaloHit(){}

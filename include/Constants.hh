@@ -20,5 +20,6 @@ constexpr G4double strip_sizeZ = 296*mm;
 
 //constexpr G4double airSpace = 0.05*mm;
 constexpr G4double tungstenWidth = 0.1*mm;
+constexpr G4bool checkOverlaps = false;
 
 #endif

@@ -252,7 +252,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     new G4LogicalVolume(solidDet,
                         det_mat,
                         "Detector");
-
+    */
     // And place it
     /*
     new G4PVPlacement(0,

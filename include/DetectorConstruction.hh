@@ -23,10 +23,10 @@ public :
 
     virtual void ConstructSDandField();
 
-    int GetN_layers() { return n_layers; }
+    //int GetN_layers() { return n_layers; }
+
 protected:
-    //////////// Default sizes and variables ////////////////////////////////
-    G4bool checkOverlaps = true;
+    //////////// Default sizes and variables ///////////////////////////////
     
     //G4double CFRP_width = 0.4*mm
     //G4double edgeCFRP_width = 3*mm;
