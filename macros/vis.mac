@@ -2,6 +2,7 @@
 # of the B1 example when running in interactive mode
 #
 
+#control/macroPath macros
 # Use these open statements to open selected visualization
 #
 # Use this open statement to create an OpenGL view:

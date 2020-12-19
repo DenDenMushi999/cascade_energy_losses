@@ -68,11 +68,11 @@ int main(int argc, char** argv)
 	
 	
 	////////////// Open Terminal /////////////////////////
-	/*
+	
 	G4UIsession* session = new G4UIterminal;
 	session->SessionStart();
 	delete session;
-	*/
+	
 	///////////// end of open Terminal ///////////////////////
 	
 
@@ -117,7 +117,7 @@ int main(int argc, char** argv)
 
 	
 	/////////// B1-versioin of Process macro or start UI session /////////
-	
+	/*
 	G4VisManager* visManager = new G4VisExecutive;
 	// G4VisExecutive can take a verbosity argument - see /vis/verbose guidance.
 	// G4VisManager* visManager = new G4VisExecutive("Quiet");
@@ -139,7 +139,7 @@ int main(int argc, char** argv)
 		delete ui;
   	}
 	delete visManager;
-	
+	*/
 	/////////// end //////////////////////////////////
 
     delete runManager;

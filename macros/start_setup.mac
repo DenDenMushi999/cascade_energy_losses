@@ -1,0 +1,2 @@
+# set path to macro-files to /macros folder in build direction 
+control/macroPath macros

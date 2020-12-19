@@ -1,0 +1,6 @@
+0000000000000000000000000000000000000000 4623d53cdc24a0578405c6f7256f74128fd803d4 DenDenMushi999 <den.davletshin000@gmail.com> 1603824144 +0300	branch: Created from HEAD
+4623d53cdc24a0578405c6f7256f74128fd803d4 126a01c818a1795c974b45ea50aeea6acd244e6a DenDenMushi999 <den.davletshin000@gmail.com> 1603918986 +0300	commit: create and place lines of strips
+126a01c818a1795c974b45ea50aeea6acd244e6a 3ac62dd6ccdae90ae837ae76897261136bff0443 DenDenMushi999 <den.davletshin000@gmail.com> 1603919651 +0300	pull origin wsl_branch_stripes: Fast-forward
+3ac62dd6ccdae90ae837ae76897261136bff0443 147c1704e8a3e89e54870ba83b68bd035613984f DenDenMushi999 <den.davletshin000@gmail.com> 1605396091 +0300	pull origin wsl_branch_stripes: Fast-forward
+147c1704e8a3e89e54870ba83b68bd035613984f e9493658249381ca3fb8c1cac408d16379340ffa DenDenMushi999 <den.davletshin000@gmail.com> 1608110124 +0300	commit: check_changes
+e9493658249381ca3fb8c1cac408d16379340ffa db923ea8d90aad8e4e425aefa8162eb80183704b DenDenMushi999 <den.davletshin000@gmail.com> 1608369244 +0300	commit: realize hits and add writing to file for each event

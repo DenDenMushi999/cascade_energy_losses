@@ -48,6 +48,7 @@ target_link_libraries(cascades ${Geant4_LIBRARIES})
 # директории, что нужно например, при отладке.
 #
 set(CASCADES_SCRIPTS
+  set1.mac
   run1.mac
   run2.mac
   run3.mac
@@ -55,6 +56,11 @@ set(CASCADES_SCRIPTS
   vis.mac
   init_vis.mac
   )
+
+# Failed attempt to create /data folder in build
+#configure_file(
+#    ${PROJECT_SOURCE_DIR}/macros ${PROJECT_BINARY_DIR}/macros)
+
 
 # There are specified directories where to bring files from( I argument in configure_file)
 # and where to put them (II argument). 
