@@ -1,8 +1,0 @@
-0000000000000000000000000000000000000000 56052a741d6d0163dd41128e85373cd253acf8c0 DenDenMushi999 <den.davletshin000@gmail.com> 1576845194 +0300	branch: Created from wsl_branch
-56052a741d6d0163dd41128e85373cd253acf8c0 834d4a320001aab54d369f40910b5d40150e09d3 DenDenMushi999 <den.davletshin000@gmail.com> 1576845266 +0300	commit: create new branch
-834d4a320001aab54d369f40910b5d40150e09d3 2479d92d9f2ff71bd47842c0be4aac7cd5ab5ea8 DenDenMushi999 <den.davletshin000@gmail.com> 1582636601 +0300	commit: cas3 edit
-2479d92d9f2ff71bd47842c0be4aac7cd5ab5ea8 4a44d061a4793e57c04da8d33accc75081c32ccc DenDenMushi999 <den.davletshin000@gmail.com> 1584528837 +0300	commit: change .gitignore
-4a44d061a4793e57c04da8d33accc75081c32ccc 0eb533abf14bfe3132bd43974801de7d52006ce6 DenDenMushi999 <den.davletshin000@gmail.com> 1584530048 +0300	revert: Revert "change .gitignore"
-0eb533abf14bfe3132bd43974801de7d52006ce6 5712e921fcba19624a0d194c345d39ac63dfd87f DenDenMushi999 <den.davletshin000@gmail.com> 1584530342 +0300	pull https://github.com/DenDenMushi999/cascade_energy_losses wsl_branch2: Merge made by the 'recursive' strategy.
-5712e921fcba19624a0d194c345d39ac63dfd87f 5d95ad85a59df69c8dfd7b2c45e4e7a102b5771a DenDenMushi999 <den.davletshin000@gmail.com> 1584530443 +0300	commit: delete useless lines
-5d95ad85a59df69c8dfd7b2c45e4e7a102b5771a 4623d53cdc24a0578405c6f7256f74128fd803d4 DenDenMushi999 <den.davletshin000@gmail.com> 1603364377 +0300	commit: delete 'vis copy.mac from wsl'
