@@ -1,7 +1,7 @@
 #include "CaloHit.hh"
 
 CaloHit::CaloHit(const G4int kHitIDnumber)
-    : gHitID(kHitIDnumber)
+    : fHitID(kHitIDnumber)
 {
     return ;
 }

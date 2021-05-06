@@ -117,7 +117,7 @@ int main(int argc, char** argv)
 
 	
 	/////////// B1-versioin of Process macro or start UI session /////////
-	/*
+	/*	
 	G4VisManager* visManager = new G4VisExecutive;
 	// G4VisExecutive can take a verbosity argument - see /vis/verbose guidance.
 	// G4VisManager* visManager = new G4VisExecutive("Quiet");

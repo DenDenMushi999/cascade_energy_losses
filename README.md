@@ -9,3 +9,5 @@ Detector is as a 22x22-grid of CsI strips with shape 36x36x296 mm
 ![](procces_and_geometry.jpg)
 
 for execute program with loop.mac edit file `cascades.cc`.  uncomment strings with vismanager applying and comment block with applying `run3.mac`. 
+
+**This branch stores all hits with their coords and edep**

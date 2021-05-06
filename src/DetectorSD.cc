@@ -39,7 +39,7 @@ void DetectorSD::Initialize( G4HCofThisEvent* kHCEvent )
    kHCEvent->AddHitsCollection(fCollectionID, gHitCollection);
 }
 
-//Вызывается на каждом шаге моделирования частицы, когда она попадает в этот чувствительный объем
+// Called each time when a particle hits a volume of SD
 G4bool DetectorSD::ProcessHits(G4Step* step, G4TouchableHistory* )
 {
    	// get energy in initial step
@@ -108,12 +108,14 @@ G4bool DetectorSD::ProcessHits(G4Step* step, G4TouchableHistory* )
 	//////////////// second method of hit handling. Now I use G4VHit class///////////////////////////////
 	
 	G4double edep = step->GetTotalEnergyDeposit();
-	G4int copyNo = PreStepPoint->GetPhysicalVolume()->GetCopyNo();
+	//G4int copyNo = PreStepPoint->GetPhysicalVolume()->GetCopyNo();
+	G4ThreeVector pos = PreStepPoint->GetPosition();
 
 	CaloHit* hit = new CaloHit( fCollectionID );
 
-	hit->setEdep( edep );
-	hit->setStripNumber ( copyNo ); 
+	hit->setEdep(edep);
+	hit->setCoords(pos);
+	//hit->setStripNumber ( copyNo ); 
 	gHitCollection->insert(hit);
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -133,25 +135,28 @@ void DetectorSD::EndOfEvent(G4HCofThisEvent*)
 	string filename;
 	if (n_event>-1) 
 	{
-		n_event++;
-		G4cout << "End of " << n_event << " event" << G4endl ; 
-		filename = "Test_HC" + to_string(n_event) + ".dat";
+		n_event++;	
 	}
 	else 
 	{
 		n_event=0;
 		G4cout << "\n----- Number of event is not correct so set it manually to 0----- " << G4endl; 
-		G4cout << "End of " << n_event << " event " << G4endl ; 
-		filename = "Test_HC" + to_string(n_event) + ".dat";
 	}
+	G4cout << "End of " << n_event << " event" << G4endl ; 
+	filename = "Test_HC" + to_string(n_event) + ".dat";
 	
 	ofstream file(filename);
 	
 	
-	for (auto hit : *(gHitCollection->GetVector()) ) //Yeah, that's it seems right
+	// write all hits to file
+	for (auto hit : *(gHitCollection->GetVector()) ) //Yeah, it seems right
 	{
+		G4ThreeVector pos = hit->GetCoords()/cm;
 		file << hit->GetEdep() / MeV << " "
-			 << hit->GetStripNumber() 
+			 << pos[0] << " "
+			 << pos[1] << " "
+			 << pos[2]
+			 //<< hit->GetStripNumber() 
 			 << G4endl;
 	}
 

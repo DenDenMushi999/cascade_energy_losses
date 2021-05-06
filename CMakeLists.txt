@@ -48,6 +48,9 @@ target_link_libraries(cascades ${Geant4_LIBRARIES})
 # директории, что нужно например, при отладке.
 #
 set(CASCADES_SCRIPTS
+  loop_YZ.mac 
+  loop_Z.mac 
+  loop_Y.mac 
   set1.mac
   run1.mac
   run2.mac
